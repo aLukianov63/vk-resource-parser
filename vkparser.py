@@ -1,5 +1,9 @@
 import argparse
 
+from setup import ACCESS_TOKEN
+from src.utils import resource_download, resource_type
+from src.vk_downloader import VKParser
+
 
 def main():
     parser = argparse.ArgumentParser(description="VK resourse parser")
@@ -10,8 +14,16 @@ def main():
     parser.add_argument("--path", type=str, default="/data/", help="")
 
     args = parser.parse_args()
+    vk = VKParser(token=ACCESS_TOKEN)
 
-    print(f"\n{args.action} | {args.id} | {args.type} | {args.path}\n")
+    if args.action == "user":
+        match args.type:
+            case "photo":
+                resource = vk.get_chat_photo_links(args.id)
+                resource_download(resource, args.path, resource_type.ResourceType.PHOTO)
+            case "voice":
+                resource = vk.get_chat_voice_links(args.id)
+                resource_download(resource, args.path, resource_type.ResourceType.VOICE)
 
 
 if __name__ == '__main__':
