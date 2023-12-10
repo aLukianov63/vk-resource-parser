@@ -59,7 +59,7 @@ class VKParser:
             messages = self.vk.messages.getHistory(user_id=user_id, count=message_count_per_request, offset=offset)
 
             for message in messages['items']:
-                messages_list.append({"data": message["date"], "from": message["from_id"], "text": message["text"]})
+                messages_list.append({"date": message["date"], "from": message["from_id"], "text": message["text"]})
 
         return messages_list
 

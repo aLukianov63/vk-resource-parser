@@ -1,7 +1,7 @@
 import argparse
 
 from setup import ACCESS_TOKEN
-from src.utils import resource_download, resource_type
+from src.utils import resource_download, resource_type, save_messages_to_file
 from src.vk_downloader import VKParser
 
 
@@ -24,6 +24,9 @@ def main():
             case "voice":
                 resource = vk.get_chat_voice_links(args.id)
                 resource_download(resource, args.path, resource_type.ResourceType.VOICE)
+            case "message":
+                resource = vk.get_chat_messages(args.id)
+                save_messages_to_file(resource, args.path)
 
 
 if __name__ == '__main__':
